@@ -1,8 +1,4 @@
-# Vérifie si la chaîne représente un nombre (entier ou flottant)
-def is_number(valeur):
-    if valeur.replace('.', '', 1).isdigit() or valeur.replace('-', '', 1).isdigit() or valeur.replace('+', '', 1).isdigit():
-        return True
-    return False
+from module_test_numbers import is_number
 
 # Entree des valeurs
 numbers = []
@@ -17,5 +13,5 @@ for i in range(10):
 mean = sum(numbers) / len(numbers)
 
 # Affichage des sorties
-print("Liste des nombres :", numbers)
+print(f"Liste des nombres : numbers", )
 print("Moyenne :", mean)
