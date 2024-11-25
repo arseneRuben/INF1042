@@ -1,5 +1,5 @@
-
-
+LIMIT = 2
+from User import Student
 class Book:
   
     def __init__(self, title, author, edition_year, isbn, type, borrower):
@@ -11,23 +11,41 @@ class Book:
         self.borrower = borrower
         self.loan_list = []
 
-        if(type  in ["Livres", "CD", "Cassettes", "BD", "Autres"]):
+        if(type  in ["LIVRES", "CD", "CASSETTES", "BD", "AUTRES"]):
             self.type = type
         else:
             type = ""
        
             
-    def borrow(self, student,  begin, renewal_number):
-        if(self.available and len(student.borrowedBooks())<1 ):
-            self.borrower = student.matricule
-            loan = Loan(begin, student.matricule, self.isbn,   "Etudiant",1)
-            self.available=False
-            self.loan_list.append(loan)
-            student.borrowed_books.append(self.isbn)
-        elif(self.available):
-            print("livre indisponible ou l'etudiant detient deja un livre")
+    def borrow(self, usr,  begin, renewal_number):
+
+        if(isinstance(usr, Student)):
+
+            if(self.available and len(usr.borrowedBooks())<1 ):
+                self.borrower = usr.matricule
+                loan = Loan(begin, usr.matricule, self.isbn,   "Etudiant",1)
+                self.available=False
+                self.loan_list.append(loan)
+                usr.borrowed_books.append(self.isbn)
+
+            elif(not(self.available)):
+                print("`Le livre {} est indisponible".format(self.title))
+            else:
+                print("L'etudiant a deja un livre emprunte")
         else:
-            print("L'etudiant a deja un livre emprunte")
+            if(self.available and len(usr.borrowedBooks())<LIMIT ):
+                self.borrower = usr.matricule
+                loan = Loan(begin, usr.matricule, self.isbn,   "Etudiant",1)
+                self.available=False
+                self.loan_list.append(loan)
+                usr.borrowed_books.append(self.isbn)
+
+            elif(not(self.available)):
+                print("`Le livre {} est indisponible".format(self.title))
+            else:
+                print("L'enseignant a deja {} livre emprunte".format(LIMIT))
+
+
         
         
         
